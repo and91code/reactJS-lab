@@ -1,0 +1,28 @@
+{
+  "user": [
+    {
+      "id": "1",
+      "name": "foo",
+      "email": "foo@test.com",
+      "token": "token-foo-1"
+    }
+  ],
+  "menu": [
+    { "id": 1, "name": "cardápio feliz", "user_id": 1 },
+    { "id": 3, "name": "cardápio menos feliz", "user_id": 1 },
+    { "id": 2, "name": "cardápio menos feliz ainda", "user_id": 1 }
+  ],
+  "revenue": [
+    { "id": 1, "name": "Marguerita", "price": 0, "menu_id": 1, "type_id": 1 },
+    { "id": 2, "name": "calabresa", "price": 0, "menu_id": 1, "type_id": 1 },
+    { "id": 3, "name": "brigadeiro", "price": 0, "menu_id": 1, "type_id": 2 },
+    { "id": 4, "name": "sertaneja", "price": 0, "menu_id": 1, "type_id": 3 },
+    { "id": 5, "name": "frango requei", "price": 0, "menu_id": 1, "type_id": 3 }
+  ],
+  "revenue-type": [
+    { "id": 1, "name": "Tradicionais" },
+    { "id": 2, "name": "Doces" },
+    { "id": 3, "name": "Especiais" },
+    { "id": 4, "name": "Massa" }
+  ]
+}
