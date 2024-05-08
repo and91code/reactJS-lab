@@ -4,7 +4,22 @@
       "id": "1",
       "name": "foo",
       "email": "foo@test.com",
-      "token": "token-foo-1"
+      "token": "token-foo-1",
+      "create": 1714732931922
+    },
+    {
+      "id": "4",
+      "name": "buu",
+      "email": "buu@test.com",
+      "token": "token-buu-1",
+      "create": 1714732913000
+    },
+    {
+      "id": "7",
+      "name": "teo",
+      "email": "teo@test.com",
+      "token": "token-teo-1",
+      "create": 1714732913000
     }
   ],
   "menu": [
@@ -13,11 +28,11 @@
     { "id": 2, "name": "cardápio menos feliz ainda", "user_id": 1 }
   ],
   "revenue": [
-    { "id": 1, "name": "Marguerita", "price": 0, "menu_id": 1, "type_id": 1 },
-    { "id": 2, "name": "calabresa", "price": 0, "menu_id": 1, "type_id": 1 },
-    { "id": 3, "name": "brigadeiro", "price": 0, "menu_id": 1, "type_id": 2 },
-    { "id": 4, "name": "sertaneja", "price": 0, "menu_id": 1, "type_id": 3 },
-    { "id": 5, "name": "frango requei", "price": 0, "menu_id": 1, "type_id": 3 }
+    { "id": 1, "name": "Marguerita", "price": 1.1, "menu_id": 1, "type_id": 1 },
+    { "id": 2, "name": "calabresa", "price": 2.2, "menu_id": 1, "type_id": 1 },
+    { "id": 3, "name": "brigadeiro", "price": 3.3, "menu_id": 1, "type_id": 2 },
+    { "id": 4, "name": "sertaneja", "price": 1.2, "menu_id": 1, "type_id": 3 },
+    { "id": 5, "name": "frango requei", "price": 4, "menu_id": 1, "type_id": 3 }
   ],
   "revenue-type": [
     { "id": 1, "name": "Tradicionais" },
