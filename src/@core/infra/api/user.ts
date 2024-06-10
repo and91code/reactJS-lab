@@ -16,7 +16,7 @@ export const apiUsers = (props: Partial<IApiClient> = {}) => {
 
   const URL = ApiBaseURL("/user");
 
-  const get = async ({ payload, options }: IApiParams<IGetAll>) => {
+  const get = async ({ payload, options }: IApiParams<IGetAll> = {}) => {
     const { search } = payload ?? {};
 
     const query = ApiParseParams(ApiFilterParams(search ?? {}));
@@ -81,7 +81,7 @@ export const apiUsers = (props: Partial<IApiClient> = {}) => {
       id: payload.id,
       name: payload.name,
       email: payload.email,
-      token: payload.token,
+      username: payload.username,
     });
 
     const optionsCurrent = ApiOptions({

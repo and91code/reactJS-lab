@@ -1,5 +1,5 @@
 export const ApiBaseURL = (endpoint: string) => {
-  return process.env.NEXT_URL_API + endpoint;
+  return process.env.NEXT_PUBLIC_URL_API + endpoint;
 };
 
 export const ApiOptions = ({
@@ -83,9 +83,9 @@ export const ApiNextId = async ({
 
   const response = await fetch(endpoint, optionsCurrent);
 
-  const users = (await response.json()) as { id: number }[];
+  const data = (await response.json()) as { id: number }[];
 
-  const [{ id }] = users.slice(-1);
+  const [{ id }] = data.slice(-1);
 
   return Number(id ?? 0) + 1;
 };

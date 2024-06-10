@@ -1,7 +1,7 @@
 export interface IGetAll {
   search?: {
     name?: string;
-    email?: string;
+    // email?: string;
   };
 }
 export interface IGetById {
@@ -9,11 +9,12 @@ export interface IGetById {
 }
 export interface ICreate {
   name: string;
+  username: string;
   email: string;
 }
 export interface IUpdate {
   id: number;
   name: string;
+  username: string;
   email: string;
-  token: string;
 }
