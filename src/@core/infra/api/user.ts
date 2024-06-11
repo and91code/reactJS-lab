@@ -14,7 +14,7 @@ import { ICreate, IGetAll, IGetById, IUpdate } from "./user.types";
 export const apiUsers = (props: Partial<IApiClient> = {}) => {
   const { token } = props;
 
-  const URL = ApiBaseURL("/user");
+  const URL = ApiBaseURL("/users");
 
   const get = async ({ payload, options }: IApiParams<IGetAll> = {}) => {
     const { search } = payload ?? {};
