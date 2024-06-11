@@ -18,7 +18,7 @@ export default function PageList(props: PageProps) {
   return (
     <div>
       <PageTitle>Page SSR</PageTitle>
-      <UserTable data={props.users} onClickEdit={onClickEdit} />
+      <UserTable data={props?.users ?? []} onClickEdit={onClickEdit} />
     </div>
   )
 }
