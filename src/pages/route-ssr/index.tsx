@@ -30,8 +30,8 @@ export const getServerSideProps = async () => {
   }
 
   try {
-    const data = await apiUsers().get()
-    data.data.map(el => props.users.push(el))
+    const result = await apiUsers().get()
+    result.data?.map(el => props.users.push(el))
 
   } catch (error) {
     console.log('... error', (error as Error).message);

@@ -16,7 +16,7 @@ export default async function PageList() {
         }
       }
     })
-    result.data.map(el => users.push(el))
+    result.data?.map(el => users.push(el))
   } catch (error) {
     console.log('... error', (error as Error).message);
   }
