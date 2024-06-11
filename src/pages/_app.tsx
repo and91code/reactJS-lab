@@ -9,6 +9,11 @@ const inter = Inter({ subsets: ["latin"] });
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
+      <meta
+        name='viewport'
+        content='minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover'
+      />
+      
       <style jsx global>{`
         html {
           font-family: ${inter.style.fontFamily};
