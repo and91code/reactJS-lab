@@ -1,36 +1,32 @@
 import React from 'react'
 
 import { IUser } from '@/@core/domain/User'
-import { apiUsers } from '@/@core/infra/api/user'
 import { PageBackAPP } from '@/@core/presentation/PageBack'
 import PagePrintData from '@/@core/presentation/PagePrintData'
 import PageTitle from '@/@core/presentation/PageTitle'
+import { UserFormServer } from './_components/UserFormServer'
+import { getUser, updateUser } from './actions'
+import { UserFormClient } from './_components/UserFormClient'
 
 interface PageIdProps {
   params: { id: string }
 }
+
 export default async function PageId(props: PageIdProps) {
-  let data: Partial<IUser> = {}
 
-  const currentId = Number(props.params.id)
+  const currentId = props.params.id
 
-  try {
-    const result = await apiUsers().getId({
-      payload: { id: Number(currentId) },
-      options: {
-        cache: 'force-cache',
-      }
-    })
-    data = result.data
-  } catch (error) {
-    console.log('... error', (error as Error).message);
-  }
+  const data: Partial<IUser> = await getUser(currentId)
+
+  const time = new Date().getTime()
 
   return (
     <>
-      <PageTitle>Page APP | id: {currentId}</PageTitle>
+      <PageTitle>Page APP | id: {currentId} | <span className='text-sm font-semibold text-black'>({time})</span></PageTitle>
       <PageBackAPP to='/route-app' />
       <PagePrintData data={data} />
+      <UserFormClient user={data} updateUser={updateUser} />
+      <UserFormServer user={data} updateUser={updateUser} />
     </>
   )
 }

@@ -30,7 +30,11 @@ export const apiUsers = (props: Partial<IApiClient> = {}) => {
 
     const data = (await response.json()) as IUser[];
 
-    return { status: response.status, data };
+    return {
+      status: response.status,
+      ok: response.ok,
+      data
+    };
   };
 
   const getId = async ({ payload, options }: IApiParams<IGetById>) => {
@@ -45,16 +49,16 @@ export const apiUsers = (props: Partial<IApiClient> = {}) => {
 
     const data = (await response.json()) as IUser;
 
-    return { status: response.status, data };
+    return {
+      status: response.status,
+      ok: response.ok,
+      data
+    };
   };
 
   const create = async ({
-    payload,
-    options,
-  }: IApiPayload<ICreate>): Promise<{
-    status: number;
-    data: IUser;
-  }> => {
+    payload, options
+  }: IApiPayload<ICreate>) => {
     const nextId = await ApiNextId({ token, endpoint: URL });
 
     const body = JSON.stringify({
@@ -73,10 +77,16 @@ export const apiUsers = (props: Partial<IApiClient> = {}) => {
 
     const data = (await response.json()) as IUser;
 
-    return { status: response.status, data };
+    return {
+      status: response.status,
+      ok: response.ok,
+      data
+    };
   };
 
-  const update = async ({ payload, options }: IApiPayload<IUpdate>) => {
+  const update = async ({
+    payload, options
+  }: IApiPayload<IUpdate>) => {
     const body = JSON.stringify({
       id: payload.id,
       name: payload.name,
@@ -93,7 +103,11 @@ export const apiUsers = (props: Partial<IApiClient> = {}) => {
 
     const data = (await response.json()) as IUser;
 
-    return { status: response.status, data };
+    return {
+      status: response.status,
+      ok: response.ok,
+      data
+    };
   };
 
   return { get, getId, create, update };
