@@ -1,8 +1,11 @@
+'use server'
+
 import { apiUsers } from "@/@core/infra/api/user"
 
-export async function getUsers() {
+export async function getUser(currentId: string) {
   try {
-    const result = await apiUsers().get({
+    const result = await apiUsers().getId({
+      payload: { id: Number(currentId) },
       options: {
         cache: 'force-cache',
       }

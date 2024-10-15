@@ -1,8 +1,8 @@
+import React from 'react'
 import { IUser } from '@/@core/domain/User'
 import { Button } from '@/@core/presentation/ui/button'
 import { Input } from '@/@core/presentation/ui/input'
 import { Label } from '@/@core/presentation/ui/label'
-import React from 'react'
 
 export const UserFormServer = (props: {
   user: Partial<IUser>

@@ -1,11 +1,11 @@
 'use client'
 
 import React, { useState } from 'react'
+
 import { IUser } from '@/@core/domain/User'
 import { Button } from '@/@core/presentation/ui/button'
 import { Input } from '@/@core/presentation/ui/input'
 import { Label } from '@/@core/presentation/ui/label'
-import { updateUser } from '../actions'
 
 export const UserFormClient = (props: {
   user: Partial<IUser>
@@ -23,7 +23,7 @@ export const UserFormClient = (props: {
     payload.append('username', e.target?.['username'].value)
     payload.append('email', e.target?.['email'].value)
 
-    await updateUser(payload)
+    await props.updateUser(payload)
   }
 
   return (

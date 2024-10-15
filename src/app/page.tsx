@@ -5,11 +5,11 @@ import { mapLinks } from "@/@core/content/routeLink";
 
 export default function Home() {
   return (
-    <main className="min-h-screen min-w-screen flex">
+    <>
       <LinkRoot>
         {mapLinks.map(link => <LinkItem key={link.label} {...link} />)}
       </LinkRoot>
-    </main>
+    </>
   );
 }
 
@@ -49,7 +49,7 @@ const LinkTo = ({ to }: { to: string }) => {
   return (
     <Link
       href={to}
-      target="_blank"
+      // target="_blank"
       className="border p-0.5 rounded text-xs capitalize"
     >
       ver mais
