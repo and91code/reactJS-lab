@@ -2,6 +2,7 @@ import { Check, RotateCcw } from 'lucide-react';
 import { translations } from '../../i18n/translations';
 import { useTodoStore } from '../../stores/useTodoStore';
 import type { Todo, TodoCategory } from '../../types/todo';
+import Button from '../ui/Button/Button';
 import type { TableTodosProps } from './TableTodos.types';
 
 export default function TableTodos({ todos, onToggle }: TableTodosProps) {
@@ -42,7 +43,9 @@ export default function TableTodos({ todos, onToggle }: TableTodosProps) {
                     </span>
                   </td>
                   <td>
-                    <button
+                    <Button
+                      variant="secondary"
+                      size="sm"
                       className="todo-toggle"
                       type="button"
                       aria-label={todo.completed
@@ -62,7 +65,7 @@ export default function TableTodos({ todos, onToggle }: TableTodosProps) {
                           {messages.completeButton}
                         </>
                       )}
-                    </button>
+                    </Button>
                   </td>
                 </tr>
               ))}
