@@ -1,25 +1,26 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { translations } from '../../i18n/translations';
+import { useTodoStore } from '../../stores/useTodoStore';
 import { TODO_CATEGORIES } from '../../types/todo';
-import { todoFormSchema, type TodoFormValue } from './FormTodo.schema';
+import {
+  createTodoFormSchema,
+  type TodoFormValue
+} from './FormTodo.schema';
 import type { FormTodoProps } from './FormTodo.types';
 import { toOutput } from './FormTodo.utils';
 
-const categoryLabels = {
-  pessoal: 'Pessoal',
-  trabalho: 'Trabalho',
-  estudos: 'Estudos',
-} as const;
-
 export default function FormTodo({ onSubmit }: FormTodoProps) {
+  const { form: formMessages } = useTodoStore((state) => translations[state.language]);
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
   } = useForm<TodoFormValue>({
-    resolver: zodResolver(todoFormSchema),
+    resolver: zodResolver(createTodoFormSchema(formMessages.validation)),
     defaultValues: { title: '', category: undefined },
   });
 
@@ -30,13 +31,14 @@ export default function FormTodo({ onSubmit }: FormTodoProps) {
 
   return (
     <section className="todo-form-section" aria-labelledby="todo-form-title">
-      <h2 id="todo-form-title">Nova tarefa</h2>
+      <h2 id="todo-form-title">{formMessages.heading}</h2>
       <form className="todo-form" noValidate onSubmit={handleSubmit(submitTodo)}>
         <div className="todo-field">
-          <label htmlFor="todo-title">Título</label>
+          <label htmlFor="todo-title">{formMessages.titleLabel}</label>
           <input
             id="todo-title"
             autoComplete="off"
+            placeholder={formMessages.titlePlaceholder}
             aria-invalid={Boolean(errors.title)}
             aria-describedby={errors.title ? 'todo-title-error' : undefined}
             {...register('title')}
@@ -49,7 +51,7 @@ export default function FormTodo({ onSubmit }: FormTodoProps) {
         </div>
 
         <div className="todo-field">
-          <label htmlFor="todo-category">Categoria</label>
+          <label htmlFor="todo-category">{formMessages.categoryLabel}</label>
           <select
             id="todo-category"
             aria-invalid={Boolean(errors.category)}
@@ -59,11 +61,11 @@ export default function FormTodo({ onSubmit }: FormTodoProps) {
             })}
           >
             <option value="">
-              Selecione uma categoria
+              {formMessages.categoryPlaceholder}
             </option>
             {TODO_CATEGORIES.map((category) => (
               <option key={category} value={category}>
-                {categoryLabels[category]}
+                {formMessages.categories[category]}
               </option>
             ))}
           </select>
@@ -76,7 +78,7 @@ export default function FormTodo({ onSubmit }: FormTodoProps) {
 
         <button className="todo-submit" type="submit" disabled={isSubmitting}>
           <Plus size={18} aria-hidden="true" />
-          Adicionar tarefa
+          {formMessages.submit}
         </button>
       </form>
     </section>

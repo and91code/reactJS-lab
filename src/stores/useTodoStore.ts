@@ -1,11 +1,15 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
+import type { Language } from '../i18n/translations';
 import type { Todo } from '../types/todo';
 
 export const TODO_STORAGE_KEY = '@todo-app:store-v1';
 
 export interface TodoState {
   todos: Todo[];
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  toggleLanguage: () => void;
   addTodo: (todo: Todo) => Promise<void>;
   toggleTodo: (id: string) => void;
   removeTodo: (id: string) => void;
@@ -16,6 +20,10 @@ export const useTodoStore = create<TodoState>()(
   persist(
     (set) => ({
       todos: [],
+      language: 'pt-BR',
+      setLanguage: (language) => set({ language }),
+      toggleLanguage: () =>
+        set((state) => ({ language: state.language === 'pt-BR' ? 'en-US' : 'pt-BR' })),
       addTodo: async (todo: Todo) => {
         set((state) => ({ todos: [todo, ...state.todos] }));
       },

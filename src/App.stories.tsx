@@ -11,7 +11,7 @@ const meta = {
     layout: 'fullscreen',
   },
   loaders: [() => {
-    useTodoStore.setState({ todos: [] });
+    useTodoStore.setState({ todos: [], language: 'pt-BR' });
     return {};
   }],
 } satisfies Meta<typeof App>;

@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { useTodoStore } from '../../stores/useTodoStore';
 import type { Todo } from '../../types/todo';
 import TableTodos from './TableTodos';
 
@@ -22,6 +23,12 @@ const todos: Todo[] = [
 ];
 
 describe('TableTodos', () => {
+  beforeEach(() => {
+    localStorage.clear();
+    useTodoStore.setState({ language: 'pt-BR' });
+    localStorage.clear();
+  });
+
   it('shows an accessible empty state when there are no todos', () => {
     render(<TableTodos todos={[]} onToggle={vi.fn()} />);
 
@@ -47,5 +54,16 @@ describe('TableTodos', () => {
     await user.click(screen.getByRole('button', { name: 'Concluir Comprar leite' }));
 
     expect(onToggle).toHaveBeenCalledWith('todo-1');
+  });
+
+  it('renders headers, category, status and actions in English', () => {
+    useTodoStore.getState().setLanguage('en-US');
+    render(<TableTodos todos={todos} onToggle={vi.fn()} />);
+
+    expect(screen.getByRole('table', { name: 'Task list' })).toBeInTheDocument();
+    expect(screen.getByRole('columnheader', { name: 'Title' })).toBeInTheDocument();
+    expect(screen.getByRole('row', { name: /Comprar leite Personal Pending Complete/ })).toBeInTheDocument();
+    expect(screen.getByRole('row', { name: /Enviar relatório Work Completed Reopen/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Complete Comprar leite' })).toBeInTheDocument();
   });
 });

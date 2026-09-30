@@ -1,9 +1,16 @@
 import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { useTodoStore } from '../../stores/useTodoStore';
 import FormTodo from './FormTodo';
 
 describe('FormTodo', () => {
+  beforeEach(() => {
+    localStorage.clear();
+    useTodoStore.setState({ language: 'pt-BR' });
+    localStorage.clear();
+  });
+
   it('shows required field errors when submitted empty', async () => {
     const user = userEvent.setup();
     const onSubmit = vi.fn();
@@ -63,5 +70,16 @@ describe('FormTodo', () => {
       'trabalho',
       'estudos',
     ]);
+  });
+
+  it('shows validation errors in the selected language', async () => {
+    const user = userEvent.setup();
+    useTodoStore.getState().setLanguage('en-US');
+    render(<FormTodo onSubmit={vi.fn()} />);
+
+    await user.click(screen.getByRole('button', { name: 'Add task' }));
+
+    expect(await screen.findByText('Title is required.')).toBeInTheDocument();
+    expect(await screen.findByText('Category is required.')).toBeInTheDocument();
   });
 });

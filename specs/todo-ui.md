@@ -29,6 +29,7 @@ O domínio de To-Do precisa de uma interface acessível para criar tarefas valid
 - Os testes dos componentes cobrem campos obrigatórios, limites de tamanho do título, envio válido, lista vazia, linhas renderizadas e alternância de status.
 - A aplicação inicia com a lista vazia, adiciona as tarefas enviadas como pendentes e atualiza o status e a contagem de pendências ao alterná-las.
 - O teste integrado cobre o estado inicial, a criação e a conclusão por meio das interações da pessoa usuária.
+- A aplicação, o formulário e a tabela exibem mensagens no idioma selecionado na store.
 
 ## Restrições e decisões
 

@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { expect, fn, userEvent, within } from 'storybook/test';
+import { useTodoStore } from '../../stores/useTodoStore';
 import FormTodo from './FormTodo';
 
 const meta = {
@@ -9,6 +10,10 @@ const meta = {
   args: {
     onSubmit: fn(),
   },
+  loaders: [() => {
+    useTodoStore.setState({ language: 'pt-BR' });
+    return {};
+  }],
 } satisfies Meta<typeof FormTodo>;
 
 export default meta;

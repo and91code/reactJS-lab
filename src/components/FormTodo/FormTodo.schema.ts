@@ -1,19 +1,27 @@
-import z from "zod";
-import { TODO_CATEGORIES } from "../../types/todo";
+import { z } from 'zod';
+import type { TodoFormValidationMessages } from '../../i18n/translations';
+import { TODO_CATEGORIES } from '../../types/todo';
 
-export const todoFormSchema = z.object({
-  // Obrigatório: z.string() rejeita valores ausentes ou que não sejam texto.
-  // A spec exige ao menos 3 caracteres e permite no máximo 50.
-  title: z
-    .string({ required_error: 'O título é obrigatório.' })
-    .min(1, { message: 'O título é obrigatório.' })
-    .min(3, { message: 'O título deve ter pelo menos 3 caracteres.' })
-    .max(50, { message: 'O título deve ter no máximo 50 caracteres.' }),
-  // Obrigatória: somente as três categorias da spec são aceitas.
-  category: z.enum(TODO_CATEGORIES, {
-    required_error: 'A categoria é obrigatória.',
-    invalid_type_error: 'Selecione uma categoria válida.',
-  }),
+export function createTodoFormSchema(messages: TodoFormValidationMessages) {
+  return z.object({
+    title: z
+      .string({ required_error: messages.titleRequired })
+      .min(1, { message: messages.titleRequired })
+      .min(3, { message: messages.titleMin })
+      .max(50, { message: messages.titleMax }),
+    category: z.enum(TODO_CATEGORIES, {
+      required_error: messages.categoryRequired,
+      invalid_type_error: messages.categoryInvalid,
+    }),
+  });
+}
+
+export const todoFormSchema = createTodoFormSchema({
+  titleRequired: 'O título é obrigatório.',
+  titleMin: 'O título deve ter pelo menos 3 caracteres.',
+  titleMax: 'O título deve ter no máximo 50 caracteres.',
+  categoryRequired: 'A categoria é obrigatória.',
+  categoryInvalid: 'Selecione uma categoria válida.',
 });
 
 export type TodoFormValue = z.infer<typeof todoFormSchema>;

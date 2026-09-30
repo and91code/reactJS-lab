@@ -14,12 +14,27 @@ const createTodo = (overrides: Partial<Todo> = {}): Todo => ({
 describe('useTodoStore', () => {
   beforeEach(() => {
     localStorage.clear();
-    useTodoStore.setState({ todos: [] });
-    localStorage.removeItem(TODO_STORAGE_KEY);
+    useTodoStore.setState({ todos: [], language: 'pt-BR' });
+    localStorage.clear();
   });
 
   it('starts with an empty list', () => {
     expect(useTodoStore.getState().todos).toEqual([]);
+    expect(useTodoStore.getState().language).toBe('pt-BR');
+  });
+
+  it('sets the selected language', () => {
+    useTodoStore.getState().setLanguage('en-US');
+
+    expect(useTodoStore.getState().language).toBe('en-US');
+  });
+
+  it('toggles between Portuguese and English', () => {
+    useTodoStore.getState().toggleLanguage();
+    expect(useTodoStore.getState().language).toBe('en-US');
+
+    useTodoStore.getState().toggleLanguage();
+    expect(useTodoStore.getState().language).toBe('pt-BR');
   });
 
   it('adds a todo to the beginning of the list', async () => {
@@ -110,21 +125,24 @@ describe('useTodoStore', () => {
 
   it('persists todos under the configured localStorage key', async () => {
     await useTodoStore.getState().addTodo(createTodo());
+    useTodoStore.getState().setLanguage('en-US');
 
     const serialized = localStorage.getItem(TODO_STORAGE_KEY);
 
     expect(serialized).not.toBeNull();
     expect(JSON.parse(serialized!).state.todos[0].id).toBe('todo-1');
+    expect(JSON.parse(serialized!).state.language).toBe('en-US');
   });
 
   it('rehydrates todos and restores createdAt as a Date', async () => {
     const todo = createTodo();
     await useTodoStore.getState().addTodo(todo);
+    useTodoStore.getState().setLanguage('en-US');
 
     const serialized = localStorage.getItem(TODO_STORAGE_KEY);
     expect(serialized).not.toBeNull();
 
-    useTodoStore.setState({ todos: [] });
+    useTodoStore.setState({ todos: [], language: 'pt-BR' });
     localStorage.setItem(TODO_STORAGE_KEY, serialized!);
     await useTodoStore.persist.rehydrate();
 
@@ -139,5 +157,6 @@ describe('useTodoStore', () => {
     expect(useTodoStore.getState().todos[0].createdAt.toISOString()).toBe(
       todo.createdAt.toISOString(),
     );
+    expect(useTodoStore.getState().language).toBe('en-US');
   });
 });

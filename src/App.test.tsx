@@ -2,12 +2,12 @@ import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it } from 'vitest';
 import App from './App';
-import { useTodoStore } from './stores/useTodoStore';
+import { TODO_STORAGE_KEY, useTodoStore } from './stores/useTodoStore';
 
 describe('App', () => {
   beforeEach(() => {
     localStorage.clear();
-    useTodoStore.setState({ todos: [] });
+    useTodoStore.setState({ todos: [], language: 'pt-BR' });
     localStorage.clear();
   });
 
@@ -17,6 +17,22 @@ describe('App', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'Seu dia, em ordem.' })).toBeInTheDocument();
     expect(screen.getByRole('status')).toHaveTextContent('Nenhuma tarefa cadastrada.');
     expect(screen.queryByRole('table', { name: 'Lista de tarefas' })).not.toBeInTheDocument();
+  });
+
+  it('switches the application interface to English and persists the language', async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.selectOptions(screen.getByRole('combobox', { name: 'Idioma' }), 'en-US');
+
+    expect(screen.getByRole('heading', { level: 1, name: 'Your day, in order.' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'New task' })).toBeInTheDocument();
+    expect(screen.getByRole('status')).toHaveTextContent('No tasks yet.');
+    expect(screen.getByRole('textbox', { name: 'Title' })).toHaveAttribute(
+      'placeholder',
+      'What do you need to do?',
+    );
+    expect(localStorage.getItem(TODO_STORAGE_KEY)).toContain('"language":"en-US"');
   });
 
   it('creates a task and toggles it to completed', async () => {

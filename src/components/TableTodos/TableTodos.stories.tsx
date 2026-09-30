@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { fn } from 'storybook/test';
+import { useTodoStore } from '../../stores/useTodoStore';
 import TableTodos from './TableTodos';
 
 const meta = {
@@ -9,6 +10,10 @@ const meta = {
   args: {
     onToggle: fn(),
   },
+  loaders: [() => {
+    useTodoStore.setState({ language: 'pt-BR' });
+    return {};
+  }],
 } satisfies Meta<typeof TableTodos>;
 
 export default meta;

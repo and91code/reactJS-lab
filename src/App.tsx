@@ -3,13 +3,17 @@ import { TodoAPI } from './api/todo/todo.api';
 import styles from './App.module.css';
 import FormTodo from './components/FormTodo/FormTodo';
 import type { TodoFormOutput } from './components/FormTodo/FormTodo.utils';
+import LanguageSelector from './components/LanguageSelector/LanguageSelector';
 import TableTodos from './components/TableTodos/TableTodos';
+import { translations } from './i18n/translations';
 import { useTodoStore } from './stores/useTodoStore';
 
 export default function App() {
   const todos = useTodoStore((state) => state.todos);
   const addTodo = useTodoStore((state) => state.addTodo);
   const toggleTodo = useTodoStore((state) => state.toggleTodo);
+  const language = useTodoStore((state) => state.language);
+  const messages = translations[language].app;
   const pendingCount = todos.filter((todo) => !todo.completed).length;
 
   const handleSubmit = async ({ title, category }: TodoFormOutput) => {
@@ -18,8 +22,8 @@ export default function App() {
       category,
       completed: false,
     });
-    addTodo(todo)
-  }
+    await addTodo(todo);
+  };
 
   return (
     <div className={styles.page}>
@@ -27,23 +31,24 @@ export default function App() {
         <div className={styles.headerInner}>
           <p className={styles.eyebrow}>
             <ListTodo size={18} aria-hidden="true" />
-            Planejamento pessoal
+            {messages.eyebrow}
           </p>
           <div className={styles.headerContent}>
             <div>
               <h1 className={styles.title}>
-                Seu dia, <span>em ordem.</span>
+                {messages.titleLead} <span>{messages.titleEmphasis}</span>
               </h1>
-              <p className={styles.subtitle}>Uma tarefa de cada vez, com clareza.</p>
+              <p className={styles.subtitle}>{messages.subtitle}</p>
             </div>
-            <div className={styles.summary} aria-label="Resumo das tarefas" aria-live="polite">
+            <LanguageSelector />
+            <div className={styles.summary} aria-label={messages.summaryLabel} aria-live="polite">
               <p>
                 <strong>{todos.length}</strong>
-                <span>Tarefas</span>
+                <span>{messages.totalTasks}</span>
               </p>
               <p>
                 <strong>{pendingCount}</strong>
-                <span>Pendentes</span>
+                <span>{messages.pendingTasks}</span>
               </p>
             </div>
           </div>
