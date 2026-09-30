@@ -1,0 +1,1 @@
+import{t as e}from"./iframe-CDvotyq4.js";e();
